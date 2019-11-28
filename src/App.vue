@@ -2,8 +2,13 @@
   <div class="app-contrainer">
     <!-- 加载项目的头部header -->
     <mt-header fixed title="趣事多"></mt-header>
+
     <!-- 加载路由组件router-view 区域 -->
-    <router-view></router-view>
+
+    <transition>
+      <router-view></router-view>
+    </transition>
+
     <!-- 加载项目的底部bottom -->
     <nav class="mui-bar mui-bar-tab">
       <router-link class="mui-tab-item" to="/home">
@@ -34,5 +39,20 @@
 <style lang="scss" scoped>
 .app-contrainer {
   padding-top: 40px;
+  overflow-x: hidden;
+  padding-bottom: 50px;
+}
+.v-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+  position: absolute;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
 }
 </style>

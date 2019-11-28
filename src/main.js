@@ -12,10 +12,11 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 //按需导入mint-ui组件库
-import { Header,Swipe, SwipeItem} from 'mint-ui'
+import { Header,Swipe, SwipeItem,Button} from 'mint-ui'
 Vue.component(Header.name, Header)
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
+Vue.component(Button.name, Button)
 
 //导入mui组件库
 import './lib/mui/css/mui.css'
@@ -24,6 +25,14 @@ import './lib/mui/css/icons-extra.css'
 
 //导入自定义路由router.js
 import router from './router.js'
+
+//引入axios
+import Axios from 'axios'
+Axios.defaults.baseURL = 'https://api.apiopen.top/'
+Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+//给Vue原型挂载一个属性
+Vue.prototype.$axios = Axios;
 
 //注册vue对象
 var vue = new Vue({
