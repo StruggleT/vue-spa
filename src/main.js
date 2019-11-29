@@ -11,6 +11,13 @@ import app from './App.vue'
 import VueRouter from 'vue-router' 
 Vue.use(VueRouter)
 
+//导入时间格式话插件
+import moment from 'moment'
+//定义全局过滤器
+Vue.filter('dataFormat',function (daraStr , pattern = "YYYY-MM-DD HH:mm:ss"){
+  return moment(daraStr).format(pattern)
+})
+
 //按需导入mint-ui组件库
 import { Header,Swipe, SwipeItem,Button} from 'mint-ui'
 Vue.component(Header.name, Header)
