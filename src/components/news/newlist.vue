@@ -3,10 +3,7 @@
     <ul class="mui-table-view">
       <li class="mui-table-view-cell mui-media" v-for="item in newsList" :key="item.sid">
         <router-link :to="'/home/newsinfo/' + item.sid">
-          <img
-            class="mui-media-object mui-pull-left"
-            :src="item.header"
-          />
+          <img class="mui-media-object mui-pull-left" :src="item.header" />
           <div class="mui-media-body">
             <h1>{{item.text}}</h1>
             <p class="mui-ellipsis">
@@ -21,11 +18,13 @@
 </template>
 
 <script>
+import { Toast } from "mint-ui";
+
 export default {
   data() {
     return {
-      newsList: [],
-    }
+      newsList: []
+    };
   },
   created() {
     //请求图片api
@@ -38,12 +37,12 @@ export default {
 
     this.$axios({
       method: "post",
-      url: url,
+      url: url
       // data: params
     })
       .then(res => {
         if (res.data.code === 200) {
-          // console.log(res.data.result);
+          // console.log(res.data.result)
           this.newsList = res.data.result;
         }
       })
@@ -51,7 +50,7 @@ export default {
         Toast("新闻加载失败");
       });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -66,7 +65,7 @@ export default {
       font-size: 12px;
       color: #2262ff;
       justify-content: space-between;
-      .mui-icon{
+      .mui-icon {
         font-size: 12px;
       }
     }

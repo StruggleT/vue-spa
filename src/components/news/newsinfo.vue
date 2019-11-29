@@ -20,6 +20,7 @@
 <script>
 //导入评论组件
 import comment from "../subcomponents/comment.vue";
+import { Toast } from "mint-ui";
 
 export default {
   data() {
@@ -44,7 +45,6 @@ export default {
       })
         .then(res => {
           if (res.data.code === 200) {
-            console.log(res.data.result);
             this.newsinfo = res.data.result;
           }
         })
@@ -74,6 +74,7 @@ export default {
   }
   .content {
     width: 100%;
+    padding: 0 5px 10px 5px;
   }
 }
 </style>
