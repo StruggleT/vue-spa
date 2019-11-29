@@ -17,12 +17,11 @@
     ],
     [
       "component",
-      
-        {
-          "libraryName": "mint-ui",
-          "style": true
-        }
-      
+      {
+        "libraryName": "mint-ui",
+        "style": true
+      }
     ]
-  ]
+  ],
+  "ignore":["./src/lib/mui/js/mui.js"]
 }

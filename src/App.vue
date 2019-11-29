@@ -41,6 +41,9 @@
   padding-top: 40px;
   overflow-x: hidden;
   padding-bottom: 50px;
+  .mui-bar{
+    touch-action: none;
+  }
 }
 .v-enter {
   opacity: 0;

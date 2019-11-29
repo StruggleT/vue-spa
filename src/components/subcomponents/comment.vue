@@ -26,7 +26,7 @@ export default {
     return {
       cmtList: [],
       page: 1,
-      msg: ""
+      msg: '',
     };
   },
   created() {
@@ -67,8 +67,9 @@ export default {
       params.append("count", "10");
 
       //判断用户是否输入为空
-      if(this.msg.trim.length === 0) {
+      if(this.msg.trim().length === 0) {
         Toast('请输入评论内容');
+        return
       }
       this.$axios({
         method: "post",
@@ -90,7 +91,7 @@ export default {
         .catch(err => {
           Toast("评论发表失败");
         });
-    }
+    } 
   }
 };
 </script>
