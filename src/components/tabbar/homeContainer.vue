@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- 轮播图区域 -->
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in data" :key="item.img">
-        <img :src="item.img" alt />
-      </mt-swipe-item>
-    </mt-swipe>
+    <slider :lunBoList="dataList" :isfull="false"></slider>
 
     <!-- 六宫格 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -22,10 +18,10 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/goodslist">
           <img src="../../images/menu3.png" alt />
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -58,10 +54,13 @@
 <script>
 import { Toast } from "mint-ui"
 
+//引入轮播图组件
+import slider from '../subcomponents/slider.vue'
+
 export default {
   data() {
     return {
-      data: []
+      dataList: []
     };
   },
   created() {
@@ -81,22 +80,24 @@ export default {
       .then(res => {
         if (res.data.code === 200) {
           // console.log(res.data.result);
-          this.data = res.data.result;
+          this.dataList = res.data.result;
         }
       })
       .catch(err => {
         Toast("轮播图加载失败");
       });
+  },
+  components:{
+    slider
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .mint-swipe {
-  height: 200px;
+  height: 250px;
   img {
     width: 100%;
-    height: 100%;
   }
 }
 .mui-grid-view.mui-grid-9 {

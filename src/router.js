@@ -10,6 +10,12 @@ import NewsList from './components/news/newlist.vue'
 import NewsInfo from './components/news/newsinfo.vue'
 import PhotoList from './components/photos/photolist.vue'
 import PhotoInfo from './components/photos/photoinfo.vue'
+import GoodsList from './components/goods/goodslist.vue'
+import GoodsInfo from './components/goods/goodsinfo.vue'
+import GoodsDesc from './components/goods/goodsDesc.vue'
+import GoodsComment from './components/goods/goodsComment.vue'
+
+
 // 第四步，创建路由对象
 var router = new VueRouter({
   routes: [
@@ -21,7 +27,11 @@ var router = new VueRouter({
     {path:'/home/newslist',component:NewsList},
     {path:'/home/newsinfo/:sid',component:NewsInfo},
     {path:'/home/photolist',component:PhotoList},
-    {path:'/home/photoinfo',component:PhotoInfo}
+    {path:'/home/photoinfo',component:PhotoInfo},
+    {path:'/home/goodslist',component:GoodsList},
+    {path:'/home/goodsinfo/:id',component:GoodsInfo},
+    {path:'/home/goodsdesc/:sid',component:GoodsDesc,name:'goodsdesc'},
+    {path:'/home/goodscomment/:sid',component:GoodsComment,name:'goodscomment'}
   ],
   linkActiveClass:'mui-active'
 })

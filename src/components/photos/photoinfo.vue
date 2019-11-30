@@ -1,6 +1,6 @@
 <template>
   <div class="photo-info">
-    <div class="tips">想看美女详情？😄哈哈，不可能，来看看段子吧~~~</div>
+    <div class="tips">想看美女详情？😄哈哈，请点击放大哦~~~</div>
     <h1>{{details.name}}</h1>
     <p class="pt-header">
       <span>发表时间：{{details.passtime}}</span>
@@ -64,7 +64,7 @@ export default {
           if (res.data.code === 200) {
             res.data.result.forEach(item => {
               item.w = 600;
-              item.h = 400;
+              item.h = 700;
               item.msrc = item.img;
               item.src = item.img;
             });
@@ -103,6 +103,22 @@ export default {
   }
   .content {
     font-size: 16px;
+  }
+  .thumbs {
+    /deep/ .my-gallery {
+      //deep深层作用选择器
+      display: flex;
+      flex-wrap: wrap; //默认换行
+      figure {
+        width: 30%;
+        margin: 5px;
+        img {
+          width: 100%;
+          box-shadow: 0 0 8px #999;
+          border-radius: 5px;
+        }
+      }
+    }
   }
 }
 </style>

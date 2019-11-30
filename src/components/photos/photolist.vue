@@ -7,7 +7,7 @@
         class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
       >
         <div class="mui-scroll">
-          <a class="mui-control-item mui-active" @click='getall'>全部</a>
+          <a class="mui-control-item mui-active" @click="getall">全部</a>
           <a class="mui-control-item">热点</a>
           <a class="mui-control-item">搞笑</a>
           <a class="mui-control-item" @click="getgril">美女</a>
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       list: [],
-      page:2
+      page: 2
     };
   },
   created() {
@@ -49,7 +49,7 @@ export default {
   methods: {
     getAllImg() {
       //全部及明星分类的ajax请求
-      const url = "getImages?page="+this.page;
+      const url = "getImages?page=" + this.page;
       var params = new URLSearchParams();
       params.append("count", "30");
       this.$axios({
@@ -66,15 +66,15 @@ export default {
           Toast("图片加载失败");
         });
     },
-    getgril(){
+    getgril() {
       //美女
-      this.page++
-      this.getAllImg()
+      this.page++;
+      this.getAllImg();
     },
-    getall(){
+    getall() {
       //全部
-      this.page++
-      this.getAllImg()
+      this.page++;
+      this.getAllImg();
     }
   }
 };
@@ -90,9 +90,9 @@ export default {
     padding: 5px;
     li {
       background-color: #ccc;
-      img{
+      img {
         width: 100%;
-        height: 300px;
+        height: 100%;
         margin: auto;
         box-shadow: 0 0 20px #999;
       }
