@@ -1,5 +1,10 @@
 <template>
   <div class="goodsinfo-container">
+    <!-- 小球滚动 -->
+    <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:after-enter="afterEnter">
+      <div class="ball" v-if="ballFlag" ref="ball"></div>
+    </transition>
+
     <!-- 商品轮播图区域 -->
     <div class="mui-card">
       <div class="mui-card-content">
@@ -20,10 +25,11 @@
           <span class="now_price">￥5999</span>
           <p>
             购买数量：
-            <numbox></numbox>
+            <numbox @getcount="getnumboxcount" :max="goodsParams.up"></numbox>
+            <!-- 通过事件机制把子组件的count值保存到父组件的data上 -->
           </p>
           <mt-button type="primary" size="small">立即购买</mt-button>
-          <mt-button type="danger" size="small">加入购物车</mt-button>
+          <mt-button type="danger" size="small" @click="addToCar">加入购物车</mt-button>
         </div>
       </div>
     </div>
@@ -56,8 +62,7 @@
 import slider from "../subcomponents/slider.vue";
 //导入数字输入框组件
 import numbox from "../subcomponents/numbox_goodsinfo.vue";
-//导入mui.js文件
-import mui from "../../lib/mui/js/mui.js";
+
 export default {
   //引轮播图组件
   data() {
@@ -81,7 +86,10 @@ export default {
         }
       ],
       page: 1,
-      goodsParams: {}
+      goodsParams: {},
+      ballFlag: false,
+      numbox_count: 1,
+      id: this.$route.params.id
     };
   },
   created() {
@@ -89,9 +97,7 @@ export default {
     this.getGoodsParams();
     this.page++;
   },
-  mounted() {
-    mui(".mui-numbox").numbox();
-  },
+
   methods: {
     getLunBoList() {
       //获取轮播图数据
@@ -133,6 +139,46 @@ export default {
     goGoodsComment(sid) {
       //去商品评论
       this.$router.push({ name: "goodscomment", params: { sid } });
+    },
+    addToCar() {
+      this.ballFlag = !this.ballFlag;
+      var goodsinfo = {
+        id: this.id,
+        count: this.numbox_count,
+        price: 5999,
+        selected: true
+      };
+      this.$store.commit('addToCar',goodsinfo);
+    },
+    beforeEnter(el) {
+      el.style.transform = "translate(0,0)";
+    },
+    enter(el, done) {
+      el.offsetWidth; //加上才能显示动画
+
+      //由于把小球最终位置写死，导致在不同分辨率以及滚动条有移动距离后小球的位置不同，
+      //所以可以通过徽标的位置来减去小球的位置动态的获取小球需要位移的距离
+      //通过domObj.getBoundingClientRect()来获取位置
+      //获取小球的位置
+      const ballPosition = this.$refs.ball.getBoundingClientRect();
+      //获取徽标的位置
+      const tokenPosition = document
+        .getElementById("token")
+        .getBoundingClientRect();
+
+      const x = tokenPosition.left - ballPosition.left;
+      const y = tokenPosition.top - ballPosition.top;
+
+      el.style.transform = `translate(${x}px, ${y}px)`;
+      el.style.transition = "all .5s cubic-bezier(.38,-0.23,1,.65) ";
+      done();
+    },
+    afterEnter(el) {
+      this.ballFlag = !this.ballFlag;
+    },
+    getnumboxcount(count) {
+      //当获取到子组件的count时，保存到data中
+      this.numbox_count = parseInt(count);
     }
   },
   components: {
@@ -155,6 +201,16 @@ export default {
   }
   .mint-button-bigbtn {
     margin: 15px 0;
+  }
+  .ball {
+    width: 16px;
+    height: 16px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 99;
+    top: 430px;
+    left: 152px;
   }
 }
 </style>

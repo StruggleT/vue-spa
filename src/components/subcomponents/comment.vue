@@ -85,6 +85,7 @@ export default {
               passtime: new Date()
             }
             this.cmtList.unshift(cmtObj);
+            Toast("评论成功");
             this.msg = '';
           }
         })

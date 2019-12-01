@@ -8,13 +8,13 @@ import Vue from 'vue'
 import app from './App.vue'
 
 //导入并安装路由模块
-import VueRouter from 'vue-router' 
+import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 //导入时间格式话插件
 import moment from 'moment'
 //定义全局过滤器
-Vue.filter('dataFormat',function (daraStr , pattern = "YYYY-MM-DD HH:mm:ss"){
+Vue.filter('dataFormat', function (daraStr, pattern = "YYYY-MM-DD HH:mm:ss") {
   return moment(daraStr).format(pattern)
 })
 
@@ -46,13 +46,51 @@ import router from './router.js'
 import Axios from 'axios'
 Axios.defaults.baseURL = 'https://api.apiopen.top/'
 Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
 //给Vue原型挂载一个属性
 Vue.prototype.$axios = Axios;
 
+//导入vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+var store = new Vuex.Store({
+  state: {
+    //通过this.$store.state.***来获取
+    car: [] //用来存储商品的数据 可以设计为：{id:1 ,count:5 商品数量，price:价格，selected:true 选中状态}
+
+  },
+  mutations: {
+    //通过this.$store.commit('方法名,'唯一参数')
+
+    addToCar(state, goodsinfo) {
+      //点击加入购物车，把商品信息保存到store上
+
+      //首先，如果之前购物车有商品了，就只需要更新数量，count,
+      // 如果没有，就把商品的数据push到car这个数组中
+
+      //假设car中没有商品
+      var flag = false
+      state.car.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.count += parseInt(goodsinfo.count)
+          flag = true
+          return true
+        }
+      })
+      if(!flag){
+        state.car.push(goodsinfo)
+      }
+    }
+  },
+  getters: {
+    //通过this.$store.getters.***
+  }
+})
+
 //注册vue对象
 var vue = new Vue({
-  el:'#app',
-  render:c=>c(app),
-  router //将路由对象挂载到vue实例上
+  el: '#app',
+  render: c => c(app),
+  router, //将路由对象挂载到vue实例上
+  store //挂载store 状态管理对象
 })
