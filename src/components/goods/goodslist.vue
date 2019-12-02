@@ -2,7 +2,7 @@
   <div class="goods-list">
     <!-- 每一个商品列表 -->
     <div class="goods-item" v-for="item in goodslist" :key="item.id" @click="goDatail(item.id)">
-      <img v-lazy="item.download_url" alt />
+      <img v-lazy="item.img" alt />
       <h1 class="title">Apple iPhone 11 (A2223) 128GB 黑色 移动联通电信4G手机 双卡双待</h1>
       <div class="info">
         <p class="price">
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       goodslist: [],
-      page: 2
+      page: 1
     };
   },
   created() {
@@ -33,13 +33,15 @@ export default {
   },
   methods: {
     getgoodslist() {
-      const url = "https://picsum.photos/v2/list?page=" + this.page;
+      const url = "getImages?page=" + this.page;
       this.$axios({
-        method: "get",
+        method: "post",
         url: url
       })
         .then(res => {
-          this.goodslist = this.goodslist.concat(res.data);
+          if(res.data.code === 200){
+            this.goodslist = this.goodslist.concat(res.data.result);
+          }
         })
         .catch(err => {
           console.log("加载失败");

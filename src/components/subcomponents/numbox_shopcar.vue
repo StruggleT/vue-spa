@@ -1,13 +1,14 @@
 <template>
-  <div class="mui-numbox" data-numbox-min="1" data-numbox-max="9">
+  <div class="mui-numbox" data-numbox-min="1" data-numbox-max="50">
     <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
     <input
       id="test"
       class="mui-input-numbox"
       type="number"
-      value="1"
+      :value="nowcarcount"
       @change="changecount"
       ref="numbox"
+      readonly
     />
     <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
   </div>
@@ -22,17 +23,16 @@ export default {
   },
   methods: {
     changecount() {
-      this.$emit("getcount", this.$refs.numbox.value);
+      // console.log(this.$refs.numbox.value)
+      //每当数量值改变，就把当前数据更新到store中去覆盖
+      this.$store.commit('updataGoodsInfo',{
+        id:this.goodsId,
+        count:this.$refs.numbox.value
+      })
+
     }
   },
-  props: ["max"], //由于max是父组件传过来的，而父组件的max是异步操作得到的，所以必须要监听max的值是否返回
-  watch: {
-    max: function(newval, oldval) {
-      mui('.mui-numbox')
-        .numbox()
-        .setOption("max", newval);
-    }
-  }
+  props:['nowcarcount','goodsId']
 };
 </script>
 

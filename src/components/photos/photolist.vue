@@ -86,15 +86,19 @@ export default {
 }
 .photocontainer {
   .photo-list {
+    width: 80%;
     list-style: none;
     padding: 5px;
+    margin: 0 auto;
     li {
-      background-color: #ccc;
+      background-color: #eee;
+      margin: 20px 0;
       img {
         width: 100%;
-        height: 100%;
         margin: auto;
         box-shadow: 0 0 20px #999;
+        vertical-align: top;
+        border-radius: 10px;
       }
     }
   }
